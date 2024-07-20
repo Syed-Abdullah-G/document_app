@@ -7,15 +7,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-
-
-
-void main() async{
+void main() async {
   await WidgetsFlutterBinding.ensureInitialized();
-await Firebase.initializeApp(
-  options: DefaultFirebaseOptions.currentPlatform,
-);
-  runApp(ProviderScope(child: MyApp()),);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(
+    ProviderScope(child: MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -28,19 +27,21 @@ class MyApp extends StatelessWidget {
       title: 'Tasker',
       home: HomePage(),
       theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey,brightness: Brightness.dark),
-
-        textTheme: TextTheme(displayLarge: TextStyle(
-          fontSize: 72,fontWeight: FontWeight.bold,
-        ),
-        titleLarge: GoogleFonts.oswald(
-          fontSize: 30,fontStyle: FontStyle.italic,
-        ),
-        bodyMedium: GoogleFonts.merriweather(),
-        displaySmall: GoogleFonts.pacifico(),)
-
-      ),
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.grey, brightness: Brightness.dark),
+          textTheme: TextTheme(
+            displayLarge: TextStyle(
+              fontSize: 72,
+              fontWeight: FontWeight.bold,
+            ),
+            titleLarge: GoogleFonts.oswald(
+              fontSize: 30,
+              fontStyle: FontStyle.italic,
+            ),
+            bodyMedium: GoogleFonts.merriweather(),
+            displaySmall: GoogleFonts.pacifico(),
+          )),
     );
   }
 }

@@ -13,7 +13,7 @@ class _MainscreenState extends State<Mainscreen> {
   Widget build(BuildContext context) {
     return Scaffold(backgroundColor: Color.fromARGB(255, 25, 26, 31),
       appBar: AppBar(
-        title: Text('DoxStore'),
+        title: Text('ClouDox'),
         actions: [IconButton(onPressed: (){
 
         }, icon: Icon(Icons.exit_to_app,))],),
