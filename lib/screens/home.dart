@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:todo/screens/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,11 +20,11 @@ class _HomePageState extends State<HomePage> {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (ctx, snapshots) {
           if (snapshots.connectionState == ConnectionState.waiting) {
-            return SplashScreen();
+            return const SplashScreen();
           }
 
           if (snapshots.hasData) {
-            return Mainscreen();
+            return const Mainscreen();
           }
 
           return const LoginScreen();

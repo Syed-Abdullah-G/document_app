@@ -6,12 +6,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:core';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
-import 'package:todo/firebase/metadata.dart';
 import 'package:todo/styles/styles.dart';
 
 final storageRef = FirebaseStorage.instance.ref();
@@ -45,7 +43,7 @@ class dashboardViewState extends ConsumerState<dashboardView> {
 // Add the size to totalSize
       }
       setState(() {
-        this.totalSize = totalSize;
+        totalSize = totalSize;
       });
       return totalSize;
     } catch (e) {
@@ -101,7 +99,7 @@ class dashboardViewState extends ConsumerState<dashboardView> {
   void getEmail() async {
     final docRef = FirebaseFirestore.instance
         .collection('users')
-        .doc('${FirebaseAuth.instance.currentUser!.uid}');
+        .doc(FirebaseAuth.instance.currentUser!.uid);
     docRef.get().then(
       (DocumentSnapshot doc) {
         final data = doc.data() as Map<String, dynamic>?;
@@ -163,7 +161,7 @@ class dashboardViewState extends ConsumerState<dashboardView> {
   Widget build(BuildContext context) {
     final formattedDate = DateFormat('MMMM d, yyyy').format(now);
     return Email == null
-        ? Center(child: CircularProgressIndicator())
+        ? const Center(child: CircularProgressIndicator())
         : Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -174,7 +172,7 @@ class dashboardViewState extends ConsumerState<dashboardView> {
                   gradientCardSample(Email!, formattedDate, files),
                 ],
               )),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               Row(
@@ -223,7 +221,7 @@ class dashboardViewState extends ConsumerState<dashboardView> {
                                       GaugeAnnotation(
                                           widget: Container(
                                               child: Text(totalSize.toString(),
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       fontSize: 25,
                                                       fontWeight:
                                                           FontWeight.bold))),
@@ -254,12 +252,12 @@ class dashboardViewState extends ConsumerState<dashboardView> {
                                     onPressed: () {
                                       _pickFiles();
                                     },
-                                    label: Text('Upload Documents')),
+                                    label: const Text('Upload Documents')),
                                 ElevatedButton(
                                     onPressed: () {
                                       Navigator.pop(context);
                                     },
-                                    child: Text('Close BottomSheet')),
+                                    child: const Text('Close BottomSheet')),
                               ],
                             ),
                           ),
@@ -270,7 +268,7 @@ class dashboardViewState extends ConsumerState<dashboardView> {
                     print('-------------after widget rebuild-------');
                     print(files);
                   },
-                  label: Icon(Icons.add)),
+                  label: const Icon(Icons.add)),
               Expanded(
                   child: files.isNotEmpty
                       ? ListView.builder(
@@ -282,7 +280,7 @@ class dashboardViewState extends ConsumerState<dashboardView> {
                                   children: [
                                     Expanded(
                                       child: ListTile(
-                                        title: Text('${file_names[index]!}'),
+                                        title: Text(file_names[index]!),
                                       ),
                                     ),
                                     Expanded(
@@ -300,7 +298,7 @@ class dashboardViewState extends ConsumerState<dashboardView> {
                                               print(e);
                                             }
                                           },
-                                          child: Text('Upload')),
+                                          child: const Text('Upload')),
                                     ),
                                     Expanded(
                                       child: ElevatedButton.icon(
@@ -309,7 +307,7 @@ class dashboardViewState extends ConsumerState<dashboardView> {
                                                 [XFile(files[index].path)],
                                                 text: 'Great Document');
                                           },
-                                          label: Text('Share')),
+                                          label: const Text('Share')),
                                     ),
                                   ],
                                 ));

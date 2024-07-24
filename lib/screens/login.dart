@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo/models/user_data.dart';
 import 'package:todo/provider/details.dart';
-import 'package:todo/provider/details.dart';
 
 final _firebase = FirebaseAuth.instance;
 final db = FirebaseFirestore.instance;
@@ -69,7 +68,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Color.fromARGB(255, 25, 26, 31),
+    return Scaffold(backgroundColor: const Color.fromARGB(255, 25, 26, 31),
       body: Column(
         children: [
           Image.asset(
@@ -89,7 +88,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ),
                         ),
                         TextFormField(
-                          decoration: InputDecoration(labelText: 'Email'),
+                          decoration: const InputDecoration(labelText: 'Email'),
                           onSaved: (String? value) {
                             setState(() {
                               _enteredEmail = value!;
@@ -101,11 +100,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 : null;
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         TextFormField(
-                          decoration: InputDecoration(labelText: 'Password'),
+                          decoration: const InputDecoration(labelText: 'Password'),
                           onSaved: (String? value) {
                             setState(() {
                               _enteredPassword = value!;
@@ -117,12 +116,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 : null;
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         ElevatedButton(
-                            onPressed: _submit, child: Text('Login')),
-                        SizedBox(
+                            onPressed: _submit, child: const Text('Login')),
+                        const SizedBox(
                           height: 20,
                         ),
                         ElevatedButton(
@@ -131,7 +130,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 _isLogin = false;
                               });
                             },
-                            child: Text('Create an account'))
+                            child: const Text('Create an account'))
                       ],
                     )
                   : Column(
@@ -143,7 +142,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ),
                         ),
                         TextFormField(
-                          decoration: InputDecoration(labelText: 'Email'),
+                          decoration: const InputDecoration(labelText: 'Email'),
                           onSaved: (String? value) {
                             setState(() {
                               _enteredEmail = value!;
@@ -155,11 +154,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 : null;
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         TextFormField(
-                          decoration: InputDecoration(labelText: 'Password'),
+                          decoration: const InputDecoration(labelText: 'Password'),
                           onSaved: (String? value) {
                             setState(() {
                               _enteredPassword = value!;
@@ -171,12 +170,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 : null;
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         ElevatedButton(
-                            onPressed: _submit, child: Text('Create')),
-                        SizedBox(
+                            onPressed: _submit, child: const Text('Create')),
+                        const SizedBox(
                           height: 20,
                         ),
                         ElevatedButton(
@@ -185,7 +184,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 _isLogin = true;
                               });
                             },
-                            child: Text('Login'))
+                            child: const Text('Login'))
                       ],
                     ))
         ],
