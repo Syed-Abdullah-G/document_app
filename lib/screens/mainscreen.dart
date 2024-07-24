@@ -14,39 +14,27 @@ class _MainscreenState extends State<Mainscreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 25, 26, 31),
-      bottomNavigationBar: NavigationBar(
-        onDestinationSelected: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
-        },
-        indicatorColor: Colors.amber,
-        selectedIndex: currentPageIndex,
-        destinations: const [
-          NavigationDestination(
-            selectedIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            icon: Badge(child: Icon(Icons.folder_open)),
-            label: 'My Files',
-          ),
-        ],
-      ),
-      appBar: AppBar(
-        title: const Text('ClouDox'),
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.exit_to_app,
-              ))
-        ],
-      ),
-      body: [dashboardView(), myFile()][currentPageIndex]
-
-    );
+        backgroundColor: const Color.fromARGB(255, 25, 26, 31),
+        bottomNavigationBar: NavigationBar(
+          onDestinationSelected: (int index) {
+            setState(() {
+              currentPageIndex = index;
+            });
+          },
+          indicatorColor: Colors.amber,
+          selectedIndex: currentPageIndex,
+          destinations: const [
+            NavigationDestination(
+              selectedIcon: Icon(Icons.home),
+              icon: Icon(Icons.home_outlined),
+              label: 'Home',
+            ),
+            NavigationDestination(
+              icon: Badge(child: Icon(Icons.folder_open)),
+              label: 'My Files',
+            ),
+          ],
+        ),
+        body: [dashboardView(), myFile()][currentPageIndex]);
   }
 }

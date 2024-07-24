@@ -13,7 +13,6 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:todo/styles/styles.dart';
 
 final storageRef = FirebaseStorage.instance.ref();
-final filesRef = storageRef.child('files');
 
 class dashboardView extends ConsumerStatefulWidget {
   const dashboardView({super.key});
@@ -30,26 +29,27 @@ class dashboardViewState extends ConsumerState<dashboardView> {
   double totalSize = 0.0;
   late List<String?> file_paths;
 
-  Future<double> getTotalSize() async {
-    try {
-      ListResult res =
-          await filesRef.listAll(); // Wait for listAll() to complete
+//   Future<double> getTotalSize() async {
+//     try {
+//       ListResult res =
+//           await filesRef.listAll(); // Wait for listAll() to complete
 
-      for (Reference itemRef in res.items) {
-        double size = await getFileSize(
-            itemRef.fullPath); // Wait for getFileSize() to complete
-        totalSize += size;
+//       for (Reference itemRef in res.items) {
+//         double size = await getFileSize(
+//             itemRef.fullPath);
+//             print(itemRef.fullPath);// Wait for getFileSize() to complete
+//         totalSize += size;
 
-// Add the size to totalSize
-      }
-      setState(() {
-        totalSize = totalSize;
-      });
-      return totalSize;
-    } catch (e) {
-      return 0.0;
-    }
-  }
+// // Add the size to totalSize
+//       }
+//       setState(() {
+//         totalSize = totalSize;
+//       });
+//       return totalSize;
+//     } catch (e) {
+//       return 0.0;
+//     }
+//   }
 
   //storage operations
 
@@ -71,7 +71,7 @@ class dashboardViewState extends ConsumerState<dashboardView> {
 
   Future<void> _initData() async {
     getEmail();
-    await getTotalSize();
+    // await getTotalSize();
   }
 
   @override
@@ -162,7 +162,8 @@ class dashboardViewState extends ConsumerState<dashboardView> {
     final formattedDate = DateFormat('MMMM d, yyyy').format(now);
     return Email == null
         ? const Center(child: CircularProgressIndicator())
-        : Column(
+        : Scaffold(appBar: AppBar(title: Text('Home'),),
+            body: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -175,68 +176,68 @@ class dashboardViewState extends ConsumerState<dashboardView> {
               const SizedBox(
                 height: 50,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  FutureBuilder(
-                    future: getTotalSize(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return SizedBox(
-                          height: 200,
-                          width: 200,
-                          child: SfRadialGauge(
-                              enableLoadingAnimation: true,
-                              animationDuration: 4500,
-                              axes: <RadialAxis>[
-                                RadialAxis(
-                                    minimum: 0,
-                                    maximum: 5,
-                                    ranges: <GaugeRange>[
-                                      GaugeRange(
-                                          startValue: 0,
-                                          endValue: 2.3,
-                                          color: Colors.green,
-                                          startWidth: 10,
-                                          endWidth: 10),
-                                      GaugeRange(
-                                          startValue: 2.3,
-                                          endValue: 4,
-                                          color: Colors.orange,
-                                          startWidth: 10,
-                                          endWidth: 10),
-                                      GaugeRange(
-                                          startValue: 4,
-                                          endValue: 5,
-                                          color: Colors.red,
-                                          startWidth: 10,
-                                          endWidth: 10)
-                                    ],
-                                    pointers: <GaugePointer>[
-                                      NeedlePointer(
-                                        value: totalSize,
-                                      )
-                                    ],
-                                    annotations: <GaugeAnnotation>[
-                                      GaugeAnnotation(
-                                          widget: Container(
-                                              child: Text(totalSize.toString(),
-                                                  style: const TextStyle(
-                                                      fontSize: 25,
-                                                      fontWeight:
-                                                          FontWeight.bold))),
-                                          angle: 90,
-                                          positionFactor: 0.5)
-                                    ])
-                              ]),
-                        );
-                      } else {
-                        return Container();
-                      }
-                    },
-                  ),
-                ],
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.end,
+              //   children: [
+              //     FutureBuilder(
+              //       future: getTotalSize(),
+              //       builder: (context, snapshot) {
+              //         if (snapshot.hasData) {
+              //           return SizedBox(
+              //             height: 200,
+              //             width: 200,
+              //             child: SfRadialGauge(
+              //                 enableLoadingAnimation: true,
+              //                 animationDuration: 4500,
+              //                 axes: <RadialAxis>[
+              //                   RadialAxis(
+              //                       minimum: 0,
+              //                       maximum: 5,
+              //                       ranges: <GaugeRange>[
+              //                         GaugeRange(
+              //                             startValue: 0,
+              //                             endValue: 2.3,
+              //                             color: Colors.green,
+              //                             startWidth: 10,
+              //                             endWidth: 10),
+              //                         GaugeRange(
+              //                             startValue: 2.3,
+              //                             endValue: 4,
+              //                             color: Colors.orange,
+              //                             startWidth: 10,
+              //                             endWidth: 10),
+              //                         GaugeRange(
+              //                             startValue: 4,
+              //                             endValue: 5,
+              //                             color: Colors.red,
+              //                             startWidth: 10,
+              //                             endWidth: 10)
+              //                       ],
+              //                       pointers: <GaugePointer>[
+              //                         NeedlePointer(
+              //                           value: totalSize,
+              //                         )
+              //                       ],
+              //                       annotations: <GaugeAnnotation>[
+              //                         GaugeAnnotation(
+              //                             widget: Container(
+              //                                 child: Text(totalSize.toString(),
+              //                                     style: const TextStyle(
+              //                                         fontSize: 25,
+              //                                         fontWeight:
+              //                                             FontWeight.bold))),
+              //                             angle: 90,
+              //                             positionFactor: 0.5)
+              //                       ])
+              //                 ]),
+              //           );
+              //         } else {
+              //           return Container();
+              //         }
+              //       },
+              //     ),
+              //   ],
+              // ),
               ElevatedButton.icon(
                   onPressed: () {
                     showModalBottomSheet(
@@ -315,6 +316,6 @@ class dashboardViewState extends ConsumerState<dashboardView> {
                         )
                       : Container())
             ],
-          );
+          ));
   }
 }
