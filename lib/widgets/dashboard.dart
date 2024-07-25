@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:open_file_plus/open_file_plus.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:core';
 import 'package:file_picker/file_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:open_file/open_file.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:todo/styles/styles.dart';
 
@@ -162,160 +162,195 @@ class dashboardViewState extends ConsumerState<dashboardView> {
     final formattedDate = DateFormat('MMMM d, yyyy').format(now);
     return Email == null
         ? const Center(child: CircularProgressIndicator())
-        : Scaffold(appBar: AppBar(title: Text('Home'),),
-            body: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Card(
-                  child: Column(
-                children: [
-                  gradientCardSample(Email!, formattedDate, files),
-                ],
-              )),
-              const SizedBox(
-                height: 50,
-              ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.end,
-              //   children: [
-              //     FutureBuilder(
-              //       future: getTotalSize(),
-              //       builder: (context, snapshot) {
-              //         if (snapshot.hasData) {
-              //           return SizedBox(
-              //             height: 200,
-              //             width: 200,
-              //             child: SfRadialGauge(
-              //                 enableLoadingAnimation: true,
-              //                 animationDuration: 4500,
-              //                 axes: <RadialAxis>[
-              //                   RadialAxis(
-              //                       minimum: 0,
-              //                       maximum: 5,
-              //                       ranges: <GaugeRange>[
-              //                         GaugeRange(
-              //                             startValue: 0,
-              //                             endValue: 2.3,
-              //                             color: Colors.green,
-              //                             startWidth: 10,
-              //                             endWidth: 10),
-              //                         GaugeRange(
-              //                             startValue: 2.3,
-              //                             endValue: 4,
-              //                             color: Colors.orange,
-              //                             startWidth: 10,
-              //                             endWidth: 10),
-              //                         GaugeRange(
-              //                             startValue: 4,
-              //                             endValue: 5,
-              //                             color: Colors.red,
-              //                             startWidth: 10,
-              //                             endWidth: 10)
-              //                       ],
-              //                       pointers: <GaugePointer>[
-              //                         NeedlePointer(
-              //                           value: totalSize,
-              //                         )
-              //                       ],
-              //                       annotations: <GaugeAnnotation>[
-              //                         GaugeAnnotation(
-              //                             widget: Container(
-              //                                 child: Text(totalSize.toString(),
-              //                                     style: const TextStyle(
-              //                                         fontSize: 25,
-              //                                         fontWeight:
-              //                                             FontWeight.bold))),
-              //                             angle: 90,
-              //                             positionFactor: 0.5)
-              //                       ])
-              //                 ]),
-              //           );
-              //         } else {
-              //           return Container();
-              //         }
-              //       },
-              //     ),
-              //   ],
-              // ),
-              ElevatedButton.icon(
-                  onPressed: () {
-                    showModalBottomSheet(
-                      builder: (BuildContext context) {
-                        return SizedBox(
-                          height: 200,
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                ElevatedButton.icon(
-                                    onPressed: () {
-                                      _pickFiles();
-                                    },
-                                    label: const Text('Upload Documents')),
-                                ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text('Close BottomSheet')),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                      context: context,
+        : Scaffold(
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                showModalBottomSheet(
+                  builder: (BuildContext context) {
+                    return SizedBox(
+                      height: 200,
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ElevatedButton.icon(
+                                onPressed: () {
+                                  _pickFiles();
+                                },
+                                label: const Text('Upload Documents')),
+                            ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('Close BottomSheet')),
+                          ],
+                        ),
+                      ),
                     );
-                    print('-------------after widget rebuild-------');
-                    print(files);
                   },
-                  label: const Icon(Icons.add)),
-              Expanded(
-                  child: files.isNotEmpty
-                      ? ListView.builder(
-                          itemCount: files.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return GestureDetector(
-                                onTap: () => OpenFile.open(files[index].path),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: ListTile(
-                                        title: Text(file_names[index]!),
+                  context: context,
+                );
+              },
+              child: Icon(
+                Icons.add,
+                size: 35,
+                color: Colors.white,
+              ),
+              backgroundColor: Colors.blue,
+            ),
+            floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+            appBar: AppBar(
+              title: Text('Home'),
+            ),
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Card(
+                    child: Column(
+                  children: [
+                    gradientCardSample(Email!, formattedDate, files),
+                  ],
+                )),
+                const SizedBox(
+                  height: 10,
+                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.end,
+                //   children: [
+                //     FutureBuilder(
+                //       future: getTotalSize(),
+                //       builder: (context, snapshot) {
+                //         if (snapshot.hasData) {
+                //           return SizedBox(
+                //             height: 200,
+                //             width: 200,
+                //             child: SfRadialGauge(
+                //                 enableLoadingAnimation: true,
+                //                 animationDuration: 4500,
+                //                 axes: <RadialAxis>[
+                //                   RadialAxis(
+                //                       minimum: 0,
+                //                       maximum: 5,
+                //                       ranges: <GaugeRange>[
+                //                         GaugeRange(
+                //                             startValue: 0,
+                //                             endValue: 2.3,
+                //                             color: Colors.green,
+                //                             startWidth: 10,
+                //                             endWidth: 10),
+                //                         GaugeRange(
+                //                             startValue: 2.3,
+                //                             endValue: 4,
+                //                             color: Colors.orange,
+                //                             startWidth: 10,
+                //                             endWidth: 10),
+                //                         GaugeRange(
+                //                             startValue: 4,
+                //                             endValue: 5,
+                //                             color: Colors.red,
+                //                             startWidth: 10,
+                //                             endWidth: 10)
+                //                       ],
+                //                       pointers: <GaugePointer>[
+                //                         NeedlePointer(
+                //                           value: totalSize,
+                //                         )
+                //                       ],
+                //                       annotations: <GaugeAnnotation>[
+                //                         GaugeAnnotation(
+                //                             widget: Container(
+                //                                 child: Text(totalSize.toString(),
+                //                                     style: const TextStyle(
+                //                                         fontSize: 25,
+                //                                         fontWeight:
+                //                                             FontWeight.bold))),
+                //                             angle: 90,
+                //                             positionFactor: 0.5)
+                //                       ])
+                //                 ]),
+                //           );
+                //         } else {
+                //           return Container();
+                //         }
+                //       },
+                //     ),
+                //   ],
+                // ),
+
+                Expanded(
+                  child: Card(shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)
+                  ),
+                    margin: EdgeInsets.all(15),
+                    color: Color.fromARGB(255, 211, 205, 187),
+                    shadowColor: Colors.blueAccent,
+                    child: files.isNotEmpty
+                        ? ListView.builder(
+                            itemCount: files.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return GestureDetector(
+                                  onTap: () => OpenFile.open(files[index].path),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: ClipRRect(borderRadius: BorderRadius.circular(10),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                border: Border(
+                                                    top: BorderSide(
+                                                        width: 0.5,
+                                                        color: Colors.white),
+                                                    bottom: BorderSide(
+                                                        width: 0.5,
+                                                        color: Colors.white))),
+                                            child: ListTile(
+                                              title: Text(file_names[index]!),
+                                              trailing: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  ElevatedButton(
+                                                      onPressed: () async {
+                                                        try {
+                                                          final file = File(
+                                                              files[index].path);
+                                                          await storageRef
+                                                              .child(file_names[
+                                                                  index]!)
+                                                              .putFile(file);
+                                                          print(
+                                                              '-----------------------------------Success Fully Uploaded file---------------------------');
+                                                        } on Exception catch (e) {
+                                                          print(e);
+                                                        }
+                                                      },
+                                                      child:
+                                                          const Text('Upload')),
+                                                  ElevatedButton.icon(
+                                                      onPressed: () async {
+                                                        await Share.shareXFiles([
+                                                          XFile(files[index].path)
+                                                        ],
+                                                            text:
+                                                                'Great Document');
+                                                      },
+                                                      label: Icon(
+                                                          Icons.share_outlined)),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                    Expanded(
-                                      child: ElevatedButton(
-                                          onPressed: () async {
-                                            try {
-                                              final file =
-                                                  File(files[index].path);
-                                              await storageRef
-                                                  .child(file_names[index]!)
-                                                  .putFile(file);
-                                              print(
-                                                  '-----------------------------------Success Fully Uploaded file---------------------------');
-                                            } on Exception catch (e) {
-                                              print(e);
-                                            }
-                                          },
-                                          child: const Text('Upload')),
-                                    ),
-                                    Expanded(
-                                      child: ElevatedButton.icon(
-                                          onPressed: () async {
-                                            await Share.shareXFiles(
-                                                [XFile(files[index].path)],
-                                                text: 'Great Document');
-                                          },
-                                          label: const Text('Share')),
-                                    ),
-                                  ],
-                                ));
-                          },
-                        )
-                      : Container())
-            ],
-          ));
+                                    ],
+                                  ));
+                            },
+                          )
+                        : Container(),
+                  ),
+                ),
+              ],
+            ));
   }
 }

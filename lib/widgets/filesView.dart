@@ -1,11 +1,7 @@
-import 'dart:collection';
-import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:open_file_plus/open_file_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:todo/widgets/dashboard.dart';
 import 'package:flutter_file_downloader/flutter_file_downloader.dart';
 
 final storageRef = FirebaseStorage.instance.ref();
@@ -41,11 +37,7 @@ class _filesViewState extends State<filesView> {
     }
   }
 
-  downloadFromUrl(String url) async {
-    final directory = await getApplicationDocumentsDirectory();
-  final fileName = url.split('/').last;
-  final filePath = '${directory.path}/$fileName';
-  final file = File(filePath);
+  Future<void> downloadFromUrl(String url) async {
     FileDownloader.downloadFile(
         url: url,
         onDownloadCompleted: (String uri) {
@@ -53,7 +45,7 @@ class _filesViewState extends State<filesView> {
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: Text('Download Successful'),
+                  title: Text('Download Successful ${uri}'),
                   actions: [
                     TextButton(
                         onPressed: () {
@@ -62,7 +54,10 @@ class _filesViewState extends State<filesView> {
                         child: Text('Close')),
                     TextButton(
                         onPressed: () async {
-                          await OpenFile.open(filePath);
+                          final result = await OpenFile.open(uri);
+
+                          
+                       
                         },
                         child: Text('Open')),
                   ],
