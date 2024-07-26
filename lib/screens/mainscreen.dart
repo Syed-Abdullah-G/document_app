@@ -21,7 +21,7 @@ class _MainscreenState extends State<Mainscreen> {
               currentPageIndex = index;
             });
           },
-          indicatorColor: Colors.amber,
+          indicatorColor: Colors.pinkAccent,
           selectedIndex: currentPageIndex,
           destinations: const [
             NavigationDestination(

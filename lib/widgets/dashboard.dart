@@ -26,30 +26,9 @@ class dashboardViewState extends ConsumerState<dashboardView> {
   String? Email;
   late List<File> files = [];
   late List<String?> file_names;
-  double totalSize = 0.0;
   late List<String?> file_paths;
 
-//   Future<double> getTotalSize() async {
-//     try {
-//       ListResult res =
-//           await filesRef.listAll(); // Wait for listAll() to complete
 
-//       for (Reference itemRef in res.items) {
-//         double size = await getFileSize(
-//             itemRef.fullPath);
-//             print(itemRef.fullPath);// Wait for getFileSize() to complete
-//         totalSize += size;
-
-// // Add the size to totalSize
-//       }
-//       setState(() {
-//         totalSize = totalSize;
-//       });
-//       return totalSize;
-//     } catch (e) {
-//       return 0.0;
-//     }
-//   }
 
   //storage operations
 
@@ -197,7 +176,7 @@ class dashboardViewState extends ConsumerState<dashboardView> {
                 size: 35,
                 color: Colors.white,
               ),
-              backgroundColor: Colors.blue,
+              backgroundColor: Colors.pinkAccent,
             ),
             floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
             appBar: AppBar(
@@ -216,74 +195,13 @@ class dashboardViewState extends ConsumerState<dashboardView> {
                 const SizedBox(
                   height: 10,
                 ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.end,
-                //   children: [
-                //     FutureBuilder(
-                //       future: getTotalSize(),
-                //       builder: (context, snapshot) {
-                //         if (snapshot.hasData) {
-                //           return SizedBox(
-                //             height: 200,
-                //             width: 200,
-                //             child: SfRadialGauge(
-                //                 enableLoadingAnimation: true,
-                //                 animationDuration: 4500,
-                //                 axes: <RadialAxis>[
-                //                   RadialAxis(
-                //                       minimum: 0,
-                //                       maximum: 5,
-                //                       ranges: <GaugeRange>[
-                //                         GaugeRange(
-                //                             startValue: 0,
-                //                             endValue: 2.3,
-                //                             color: Colors.green,
-                //                             startWidth: 10,
-                //                             endWidth: 10),
-                //                         GaugeRange(
-                //                             startValue: 2.3,
-                //                             endValue: 4,
-                //                             color: Colors.orange,
-                //                             startWidth: 10,
-                //                             endWidth: 10),
-                //                         GaugeRange(
-                //                             startValue: 4,
-                //                             endValue: 5,
-                //                             color: Colors.red,
-                //                             startWidth: 10,
-                //                             endWidth: 10)
-                //                       ],
-                //                       pointers: <GaugePointer>[
-                //                         NeedlePointer(
-                //                           value: totalSize,
-                //                         )
-                //                       ],
-                //                       annotations: <GaugeAnnotation>[
-                //                         GaugeAnnotation(
-                //                             widget: Container(
-                //                                 child: Text(totalSize.toString(),
-                //                                     style: const TextStyle(
-                //                                         fontSize: 25,
-                //                                         fontWeight:
-                //                                             FontWeight.bold))),
-                //                             angle: 90,
-                //                             positionFactor: 0.5)
-                //                       ])
-                //                 ]),
-                //           );
-                //         } else {
-                //           return Container();
-                //         }
-                //       },
-                //     ),
-                //   ],
-                // ),
+               
 
                 Expanded(
                   child: Card(shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)
                   ),
-                    margin: EdgeInsets.all(15),
+                    margin: EdgeInsets.all(35),
                     color: Color.fromARGB(255, 211, 205, 187),
                     shadowColor: Colors.blueAccent,
                     child: files.isNotEmpty
