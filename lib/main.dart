@@ -3,6 +3,7 @@ import 'package:todo/screens/home.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:animated_stack/animated_stack.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async {
@@ -23,7 +24,39 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Tasker',
-      home: const HomePage(),
+      home: AnimatedStack(
+        backgroundColor: Color(0xff321B4A),
+        fabBackgroundColor: Color(0xff321B4A),
+        foregroundWidget: HomePage(),
+        columnWidget: Column(
+          children: <Widget>[
+            IconButton.filledTonal(
+              icon: Icon(Icons.upload_file_outlined),
+              onPressed: () {},
+            ),
+            SizedBox(height: 20),
+            IconButton.filledTonal(
+              icon: Icon(Icons.scanner),
+              onPressed: () {},
+            ),
+            SizedBox(height: 20),
+            IconButton.filledTonal(
+              icon: Icon(Icons.logout_outlined),
+              onPressed: () {},
+            ),
+          ],
+        ),
+        bottomWidget: Container(
+          decoration: BoxDecoration(
+            color: Color(0xff645478),
+            borderRadius: BorderRadius.all(
+              Radius.circular(50),
+            ),
+          ),
+          width: 260,
+          height: 50,
+        ),
+      ),
       theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(

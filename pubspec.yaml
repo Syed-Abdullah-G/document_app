@@ -51,6 +51,7 @@ dependencies:
   syncfusion_flutter_gauges: ^26.1.42
   flutter_file_downloader: ^2.0.0
   open_file_plus: ^3.4.1+1
+  animated_stack: ^0.2.0
 
 dev_dependencies:
   flutter_test:

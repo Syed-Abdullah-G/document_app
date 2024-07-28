@@ -79,6 +79,38 @@ class _filesViewState extends State<filesView> {
     }
   }
 
+  deleteData(String fileName) async {
+    final deleteRef = filesRef.child(fileName);
+
+    final result = await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Confirm Deletion'),
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.of(context)
+                      .pop(false), // Close dialog with false
+                  child: Text('No')),
+              TextButton(
+                  onPressed: () =>
+                      Navigator.of(context).pop(true), // Close dialog with true
+                  child: Text('Yes')),
+            ],
+          );
+        });
+
+    if (result == true) {
+      await deleteRef.delete();
+      setState(() {
+        fileItems.clear();
+      });
+      await loadData();
+      await getTotalSize();
+    }
+  }
+
   Future<void> downloadFromUrl(String url) async {
     FileDownloader.downloadFile(
         url: url,
@@ -124,7 +156,9 @@ class _filesViewState extends State<filesView> {
         child: SizedBox(
             height: (MediaQuery.of(context).size.height) / 4,
             width: MediaQuery.of(context).size.width,
-            child: Card(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50)),
               margin: EdgeInsets.all(10),
               color: Color.fromARGB(106, 199, 195, 186),
               child: Row(
@@ -187,11 +221,15 @@ class _filesViewState extends State<filesView> {
                       ),
                       Text(
                         'Used Out of',
-                        style: GoogleFonts.archivo(fontSize: 25, color: Colors.white),
+                        style: GoogleFonts.archivo(
+                            fontSize: 25, color: Colors.white),
                       ),
                       Text(
                         '5 GB',
-                        style: GoogleFonts.archivo(color: Colors.white, fontSize: 50,fontWeight: FontWeight.w100),
+                        style: GoogleFonts.archivo(
+                            color: Colors.white,
+                            fontSize: 50,
+                            fontWeight: FontWeight.w100),
                       )
                     ],
                   )
@@ -219,6 +257,9 @@ class _filesViewState extends State<filesView> {
                             onPressed: () =>
                                 downloadFromUrl(fileItems[index][1]),
                             label: Icon(Icons.download)),
+                        ElevatedButton.icon(
+                            onPressed: () => deleteData(fileItems[index][0]),
+                            label: Icon(Icons.delete)),
                       ],
                     ));
               }),

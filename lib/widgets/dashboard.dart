@@ -28,11 +28,9 @@ class dashboardViewState extends ConsumerState<dashboardView> {
   late List<String?> file_names;
   late List<String?> file_paths;
 
-
-
   //storage operations
 
-  void _pickFiles() async {
+  void pickFiles() async {
     FilePickerResult? result =
         await FilePicker.platform.pickFiles(allowMultiple: true);
     Navigator.pop(context);
@@ -142,43 +140,6 @@ class dashboardViewState extends ConsumerState<dashboardView> {
     return Email == null
         ? const Center(child: CircularProgressIndicator())
         : Scaffold(
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {
-                showModalBottomSheet(
-                  builder: (BuildContext context) {
-                    return SizedBox(
-                      height: 200,
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            ElevatedButton.icon(
-                                onPressed: () {
-                                  _pickFiles();
-                                },
-                                label: const Text('Upload Documents')),
-                            ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Text('Close BottomSheet')),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                  context: context,
-                );
-              },
-              child: Icon(
-                Icons.add,
-                size: 35,
-                color: Colors.white,
-              ),
-              backgroundColor: Colors.pinkAccent,
-            ),
-            floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
             appBar: AppBar(
               title: Text('Home'),
             ),
@@ -195,12 +156,10 @@ class dashboardViewState extends ConsumerState<dashboardView> {
                 const SizedBox(
                   height: 10,
                 ),
-               
-
                 Expanded(
-                  child: Card(shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)
-                  ),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
                     margin: EdgeInsets.all(35),
                     color: Color.fromARGB(255, 211, 205, 187),
                     shadowColor: Colors.blueAccent,
@@ -213,7 +172,9 @@ class dashboardViewState extends ConsumerState<dashboardView> {
                                   child: Row(
                                     children: [
                                       Expanded(
-                                        child: ClipRRect(borderRadius: BorderRadius.circular(10),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                           child: Container(
                                             decoration: BoxDecoration(
                                                 border: Border(
@@ -232,7 +193,8 @@ class dashboardViewState extends ConsumerState<dashboardView> {
                                                       onPressed: () async {
                                                         try {
                                                           final file = File(
-                                                              files[index].path);
+                                                              files[index]
+                                                                  .path);
                                                           await storageRef
                                                               .child(file_names[
                                                                   index]!)
@@ -248,13 +210,14 @@ class dashboardViewState extends ConsumerState<dashboardView> {
                                                   ElevatedButton.icon(
                                                       onPressed: () async {
                                                         await Share.shareXFiles([
-                                                          XFile(files[index].path)
+                                                          XFile(
+                                                              files[index].path)
                                                         ],
                                                             text:
                                                                 'Great Document');
                                                       },
-                                                      label: Icon(
-                                                          Icons.share_outlined)),
+                                                      label: Icon(Icons
+                                                          .share_outlined)),
                                                 ],
                                               ),
                                             ),
