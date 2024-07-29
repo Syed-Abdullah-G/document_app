@@ -10,6 +10,7 @@ import 'dart:core';
 import 'package:file_picker/file_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
+import 'package:todo/provider/file_details_provider.dart';
 import 'package:todo/styles/styles.dart';
 
 final storageRef = FirebaseStorage.instance.ref();
@@ -24,27 +25,9 @@ class dashboardView extends ConsumerStatefulWidget {
 class dashboardViewState extends ConsumerState<dashboardView> {
   DateTime now = DateTime.now();
   String? Email;
-  late List<File> files = [];
-  late List<String?> file_names;
-  late List<String?> file_paths;
 
   //storage operations
 
-  void pickFiles() async {
-    FilePickerResult? result =
-        await FilePicker.platform.pickFiles(allowMultiple: true);
-    Navigator.pop(context);
-
-    if (result != null) {
-      setState(() {
-        files = result.paths.map((path) => File(path!)).toList();
-        file_names = result.names;
-        file_paths = result.paths;
-      });
-    } else {
-      print('---------------------operation cancelled---------------------');
-    }
-  }
 
   Future<void> _initData() async {
     getEmail();
@@ -136,6 +119,8 @@ class dashboardViewState extends ConsumerState<dashboardView> {
 
   @override
   Widget build(BuildContext context) {
+      final fileProvider = ref.watch(fileDetailsProviderProvider);
+      print('##########################${fileProvider.file_names}');
     final formattedDate = DateFormat('MMMM d, yyyy').format(now);
     return Email == null
         ? const Center(child: CircularProgressIndicator())
@@ -150,25 +135,25 @@ class dashboardViewState extends ConsumerState<dashboardView> {
                 Card(
                     child: Column(
                   children: [
-                    gradientCardSample(Email!, formattedDate, files),
+                    gradientCardSample(Email!, formattedDate, fileProvider.files),
                   ],
                 )),
                 const SizedBox(
                   height: 10,
                 ),
                 Expanded(
-                  child: Card(
+                  child: fileProvider.files.isNotEmpty ? Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
                     margin: EdgeInsets.all(35),
                     color: Color.fromARGB(255, 211, 205, 187),
                     shadowColor: Colors.blueAccent,
-                    child: files.isNotEmpty
+                    child: fileProvider.files.isNotEmpty
                         ? ListView.builder(
-                            itemCount: files.length,
+                            itemCount: fileProvider.files.length,
                             itemBuilder: (BuildContext context, int index) {
                               return GestureDetector(
-                                  onTap: () => OpenFile.open(files[index].path),
+                                  onTap: () => OpenFile.open(fileProvider.files[index].path),
                                   child: Row(
                                     children: [
                                       Expanded(
@@ -176,16 +161,16 @@ class dashboardViewState extends ConsumerState<dashboardView> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           child: Container(
-                                            decoration: BoxDecoration(
+                                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),
                                                 border: Border(
                                                     top: BorderSide(
-                                                        width: 0.5,
-                                                        color: Colors.white),
+                                                        width: 0.7,
+                                                        color: const Color.fromARGB(255, 230, 164, 164)),
                                                     bottom: BorderSide(
-                                                        width: 0.5,
-                                                        color: Colors.white))),
+                                                        width: 0.7,
+                                                        color: Color.fromARGB(255, 230, 164, 164)))),
                                             child: ListTile(
-                                              title: Text(file_names[index]!),
+                                              title: Text(fileProvider.file_names[index]!, style: TextStyle(color: Colors.black),),
                                               trailing: Row(
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
@@ -193,10 +178,10 @@ class dashboardViewState extends ConsumerState<dashboardView> {
                                                       onPressed: () async {
                                                         try {
                                                           final file = File(
-                                                              files[index]
+                                                              fileProvider.files[index]
                                                                   .path);
                                                           await storageRef
-                                                              .child(file_names[
+                                                              .child(fileProvider.file_names[
                                                                   index]!)
                                                               .putFile(file);
                                                           print(
@@ -211,7 +196,7 @@ class dashboardViewState extends ConsumerState<dashboardView> {
                                                       onPressed: () async {
                                                         await Share.shareXFiles([
                                                           XFile(
-                                                              files[index].path)
+                                                              fileProvider.files[index].path)
                                                         ],
                                                             text:
                                                                 'Great Document');
@@ -228,8 +213,8 @@ class dashboardViewState extends ConsumerState<dashboardView> {
                                   ));
                             },
                           )
-                        : Container(),
-                  ),
+                        : Container()
+                  ) : Center(child: Text("Upload files using the + icon ", style: TextStyle(fontSize: 15),)),
                 ),
               ],
             ));

@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:todo/provider/file_details_provider.dart';
 import 'package:todo/screens/home.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -12,12 +16,46 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
-    const ProviderScope(child: MyApp()),
+    ProviderScope(child: MyApp()),
   );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends ConsumerStatefulWidget {
+  MyApp({super.key});
+
+  @override
+  ConsumerState<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends ConsumerState<MyApp> {
+  late List<File> files = [];
+  late List<String?> file_names;
+  late List<String?> file_paths;
+
+  pickFiles() async {
+    try {
+      FilePickerResult? result =
+          await FilePicker.platform.pickFiles(allowMultiple: true);
+
+      if (result != null) {
+        files = result.paths.map((path) => File(path!)).toList();
+        file_names = result.names;
+        file_paths = result.paths;
+        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@${file_paths}");
+
+        final fileProvider = ref.read(fileDetailsProviderProvider.notifier);
+       
+          fileProvider.addData(file_names, file_paths, files);
+          print(
+              "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    Suceess @@${fileProvider}");
+      
+      } else {
+        print('---------------------operation cancelled---------------------');
+      }
+    } catch (e) {
+      print('Error ------------------------ $e');
+    }
+  }
 
   // This widget is the root of your application.
   @override
@@ -32,7 +70,9 @@ class MyApp extends StatelessWidget {
           children: <Widget>[
             IconButton.filledTonal(
               icon: Icon(Icons.upload_file_outlined),
-              onPressed: () {},
+              onPressed: () {
+                pickFiles();
+              },
             ),
             SizedBox(height: 20),
             IconButton.filledTonal(
