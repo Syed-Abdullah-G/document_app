@@ -11,6 +11,6 @@ class myFile extends StatefulWidget {
 class _myFileState extends State<myFile> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: filesView(),);
+    return filesView();
   }
 }

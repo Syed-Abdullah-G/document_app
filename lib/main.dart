@@ -1,8 +1,10 @@
 import 'dart:io';
-
+import 'package:cunning_document_scanner/cunning_document_scanner.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:todo/provider/file_details_provider.dart';
+import 'package:todo/provider/imageUpload.dart';
 import 'package:todo/screens/home.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -41,14 +43,11 @@ class _MyAppState extends ConsumerState<MyApp> {
         files = result.paths.map((path) => File(path!)).toList();
         file_names = result.names;
         file_paths = result.paths;
-        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@${file_paths}");
 
         final fileProvider = ref.read(fileDetailsProviderProvider.notifier);
+
+        fileProvider.addData(file_names, file_paths, files);
        
-          fileProvider.addData(file_names, file_paths, files);
-          print(
-              "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    Suceess @@${fileProvider}");
-      
       } else {
         print('---------------------operation cancelled---------------------');
       }
@@ -63,8 +62,8 @@ class _MyAppState extends ConsumerState<MyApp> {
     return MaterialApp(
       title: 'Tasker',
       home: AnimatedStack(
-        backgroundColor: Color(0xff321B4A),
-        fabBackgroundColor: Color(0xff321B4A),
+        backgroundColor: Color.fromARGB(255, 153, 139, 168),
+        fabBackgroundColor: Color.fromARGB(255, 209, 165, 20),
         foregroundWidget: HomePage(),
         columnWidget: Column(
           children: <Widget>[
@@ -77,7 +76,21 @@ class _MyAppState extends ConsumerState<MyApp> {
             SizedBox(height: 20),
             IconButton.filledTonal(
               icon: Icon(Icons.scanner),
-              onPressed: () {},
+              onPressed: () async {
+                try {
+                  final imagesPath = await CunningDocumentScanner.getPictures(
+                    noOfPages: 1, // Limit the number of pages to 1
+                    isGalleryImportAllowed:
+                        true, // Allow the user to also pick an image from his gallery
+                  );
+                  final filePathProvider = ref.read(imageUploaderProvider.notifier);
+                  filePathProvider.addData(imagesPath);
+                  
+                  
+                } catch (e) {
+                  print(e);
+                }
+              },
             ),
             SizedBox(height: 20),
             IconButton.filledTonal(
@@ -95,6 +108,12 @@ class _MyAppState extends ConsumerState<MyApp> {
           ),
           width: 260,
           height: 50,
+          child: OutlinedButton(
+            child: Text('Log Out'),
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+            },
+          ),
         ),
       ),
       theme: ThemeData(

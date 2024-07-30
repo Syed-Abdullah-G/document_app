@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo/screens/myFile.dart';
+import 'package:todo/screens/scanDoc.dart';
 import 'package:todo/widgets/dashboard.dart';
 
 class Mainscreen extends StatefulWidget {
@@ -30,11 +31,15 @@ class _MainscreenState extends State<Mainscreen> {
               label: 'Home',
             ),
             NavigationDestination(
+              icon: Badge(child: Icon(Icons.document_scanner_outlined)),
+              label: 'Scan Documents',
+            ),
+            NavigationDestination(
               icon: Badge(child: Icon(Icons.folder_open)),
               label: 'My Files',
             ),
           ],
         ),
-        body: [dashboardView(), myFile()][currentPageIndex]);
+        body: [dashboardView(), scanDoc(),myFile()][currentPageIndex]);
   }
 }

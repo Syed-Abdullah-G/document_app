@@ -1,27 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'file_details_provider.dart';
+part of 'imageUpload.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$fileDetailsProviderHash() =>
-    r'037c23e692e88c431e718baba981db366c5c8c6e';
+String _$imageUploaderHash() => r'94a4d67dce6f1c34833f50fed78e66ab61546263';
 
-/// See also [fileDetailsProvider].
-@ProviderFor(fileDetailsProvider)
-final fileDetailsProviderProvider =
-    AutoDisposeNotifierProvider<fileDetailsProvider, fileDetails>.internal(
-  fileDetailsProvider.new,
-  name: r'fileDetailsProviderProvider',
+/// See also [imageUploader].
+@ProviderFor(imageUploader)
+final imageUploaderProvider =
+    AutoDisposeNotifierProvider<imageUploader, uploadFile>.internal(
+  imageUploader.new,
+  name: r'imageUploaderProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$fileDetailsProviderHash,
+      : _$imageUploaderHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$fileDetailsProvider = AutoDisposeNotifier<fileDetails>;
+typedef _$imageUploader = AutoDisposeNotifier<uploadFile>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
