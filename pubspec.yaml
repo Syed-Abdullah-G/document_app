@@ -53,6 +53,7 @@ dependencies:
   open_file_plus: ^3.4.1+1
   animated_stack: ^0.2.0
   cunning_document_scanner: ^1.2.3
+  hawk_fab_menu: ^1.2.0
 
 dev_dependencies:
   flutter_test:
