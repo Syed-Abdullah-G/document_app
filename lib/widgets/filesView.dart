@@ -174,12 +174,12 @@ class _filesViewState extends State<filesView> {
                           canScaleToFit: true,
                           radiusFactor: 0.8,
                           maximum: 5000,
-                          axisLineStyle: AxisLineStyle(thickness: 40),
+                          axisLineStyle: AxisLineStyle(thickness: MediaQuery.of(context).size.height * 0.02),
                           pointers: <GaugePointer>[
                             RangePointer(
                               enableAnimation: true,
                               animationType: AnimationType.easeOutBack,
-                              width: 40,
+                              width: MediaQuery.of(context).size.width * 0.05,
                               color: Color(0xFF00A8B5),
                               value: totalSize,
                               gradient: SweepGradient(colors: <Color>[
@@ -198,7 +198,7 @@ class _filesViewState extends State<filesView> {
                                 needleEndWidth: 2,
                                 needleStartWidth: 2,
                                 needleColor: _darkNeedleColor,
-                                needleLength: 0.98,
+                                needleLength: MediaQuery.of(context).size.height * 0.15,
                                 value: totalSize,
                                 enableAnimation: true,
                                 animationType: AnimationType.easeOutBack)
