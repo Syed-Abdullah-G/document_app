@@ -17,6 +17,33 @@ class uploadedPage extends StatefulWidget {
 
 class _uploadedPageState extends State<uploadedPage> {
   final TextEditingController _controller = TextEditingController();
+  bool isUploading = false;
+
+  Future<void> uploadFile(String filename) async {
+    setState(() {
+      isUploading = true;
+    });
+    try {
+      final file = File(widget.imagesPath![0]);
+      final uploadTask = storageRef.child(filename).putFile(file);
+
+      //waiting for uploadTask to finish and then setting isUploading to false
+      await uploadTask;
+      setState(() {
+        isUploading = false;
+      });
+      print(
+          '-----------------------------------Success Fully Uploaded file---------------------------');
+      Navigator.of(context).pop();
+    } catch (e) {
+      // Handle upload errors here
+      print('Upload error: $e');
+      setState(() {
+        isUploading = false;
+      });
+      // Show an error message to the user
+    }
+  }
 
   @override
   void dispose() {
@@ -39,64 +66,36 @@ class _uploadedPageState extends State<uploadedPage> {
                   SizedBox(
                     height: 60,
                   ),
+                  TextField(
+                    controller: _controller,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Enter Filename"),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ElevatedButton(onPressed: () {
-                        Navigator.of(context).pop();
-                      }, child: Text('Cancel')),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Cancel')),
+                      SizedBox(
+                        width: 30,
+                      ),
                       ElevatedButton(
                           onPressed: () async {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Text("Enter Filename"),
-                                    actions: [
-                                      TextField(
-                                        controller: _controller,
-                                        decoration: InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            labelText: "Enter Filename"),
-                                      ),
-                                      SizedBox(
-                                        height: 30,
-                                      ),
-                                      Row(
-                                        children: [
-                                          TextButton.icon(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              label:
-                                                  Icon(Icons.cancel_outlined)),
-                                          TextButton.icon(
-                                              onPressed: () async {
-                                                try {
-                                                  final filename =
-                                                      _controller.text;
-                                                  final file = File(
-                                                      widget.imagesPath![0]);
-                                                  await storageRef
-                                                      .child(filename)
-                                                      .putFile(file);
-                                                  print(
-                                                      '-----------------------------------Success Fully Uploaded file---------------------------');
-                                                } catch (e) {
-                                                  print(e);
-                                                }
-                                              },
-                                              label: Icon(
-                                                  Icons.check_circle_rounded)),
-                                        ],
-                                      )
-                                    ],
-                                  );
-                                });
+                            final filename = _controller.text;
+                            await uploadFile(filename);
                           },
-                          child: Text('Upload'))
+                          child: isUploading
+                              ? CircularProgressIndicator()
+                              : Text('Upload'))
                     ],
-                  )
+                  ),
                 ],
               )
             : Container());

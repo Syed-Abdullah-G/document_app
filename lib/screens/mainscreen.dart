@@ -8,7 +8,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hawk_fab_menu/hawk_fab_menu.dart';
 import 'package:todo/provider/file_details_provider.dart';
 import 'package:todo/screens/myFile.dart';
-import 'package:todo/screens/scanDoc.dart';
 import 'package:todo/screens/scanPage.dart';
 import 'package:todo/widgets/dashboard.dart';
 
@@ -61,7 +60,7 @@ class _MainscreenState extends ConsumerState<Mainscreen> {
             currentPageIndex = index;
           });
         },
-        indicatorColor: Colors.pinkAccent,
+        indicatorColor: Color.fromARGB(255, 201, 99, 133),
         selectedIndex: currentPageIndex,
         destinations: const [
           NavigationDestination(
@@ -69,7 +68,6 @@ class _MainscreenState extends ConsumerState<Mainscreen> {
             icon: Icon(Icons.home_outlined),
             label: 'Home',
           ),
-
           NavigationDestination(
             icon: Badge(child: Icon(Icons.folder_open)),
             label: 'My Files',
@@ -79,21 +77,22 @@ class _MainscreenState extends ConsumerState<Mainscreen> {
       body: HawkFabMenu(
         body: [dashboardView(), myFile()][currentPageIndex],
         icon: AnimatedIcons.menu_arrow,
-        fabColor: Colors.yellow,
-        iconColor: Colors.red,
+        fabColor: Color(0xFF755EE8),
+        iconColor: Colors.white,
         hawkFabMenuController: hawkFabMenuController,
         items: [
-          HawkFabMenuItem(labelBackgroundColor: Colors.black,
-          
+          HawkFabMenuItem(
+              labelBackgroundColor: Colors.transparent,
               label: "Upload Files",
               ontap: () {
                 ScaffoldMessenger.of(context).hideCurrentSnackBar();
                 pickFiles();
               },
               icon: Icon(Icons.upload_file_outlined),
-              color: Colors.red,
+              color: Color.fromARGB(255, 201, 99, 133),
               labelColor: Colors.white),
-          HawkFabMenuItem(labelBackgroundColor: Colors.black,
+          HawkFabMenuItem(
+              labelBackgroundColor: Colors.transparent,
               label: "Scan Documents",
               ontap: () async {
                 ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -118,15 +117,16 @@ class _MainscreenState extends ConsumerState<Mainscreen> {
                 }
               },
               icon: Icon(Icons.document_scanner_outlined),
-              color: Colors.red,
+              color: Color.fromARGB(255, 201, 99, 133),
               labelColor: Colors.white),
-          HawkFabMenuItem(labelBackgroundColor: Colors.black,
+          HawkFabMenuItem(
+              labelBackgroundColor: Colors.transparent,
               label: "Logout",
               ontap: () async {
                 FirebaseAuth.instance.signOut();
               },
               icon: Icon(Icons.home),
-              color: Colors.red,
+              color: Color.fromARGB(255, 201, 99, 133),
               labelColor: Colors.white)
         ],
       ),

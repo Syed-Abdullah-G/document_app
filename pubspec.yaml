@@ -54,6 +54,7 @@ dependencies:
   animated_stack: ^0.2.0
   cunning_document_scanner: ^1.2.3
   hawk_fab_menu: ^1.2.0
+  lottie: ^3.1.2
 
 dev_dependencies:
   flutter_test:
@@ -84,6 +85,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
   - assets/logo/logo-white-removebg-preview.png
+  - assets/animations/loading_animation.json
    
 
   # An image asset can refer to one or more resolution-specific "variants", see

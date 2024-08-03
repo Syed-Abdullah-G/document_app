@@ -123,144 +123,137 @@ class dashboardViewState extends ConsumerState<dashboardView> {
     final formattedDate = DateFormat('MMMM d, yyyy').format(now);
     return Email == null
         ? const Center(child: CircularProgressIndicator())
-        : 
-            
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Card(
-                    child: Column(
-                  children: [
-                    gradientCardSample(
-                        Email!, formattedDate, fileProvider.files),
-                  ],
-                )),
-                const SizedBox(
-                  height: 10,
-                ),
-                Expanded(
-                  child: fileProvider.files.isNotEmpty
-                      ? Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                          margin: EdgeInsets.all(35),
-                          color: Color.fromARGB(255, 211, 205, 187),
-                          shadowColor: Colors.blueAccent,
-                          child: fileProvider.files.isNotEmpty
-                              ? ListView.builder(
-                                  itemCount: fileProvider.files.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return GestureDetector(
-                                        onTap: () => OpenFile.open(
-                                            fileProvider.files[index].path),
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              25),
-                                                      border: Border(
-                                                          top: BorderSide(
-                                                              width: 0.7,
-                                                              color: const Color
-                                                                  .fromARGB(
-                                                                  255,
-                                                                  230,
-                                                                  164,
-                                                                  164)),
-                                                          bottom: BorderSide(
-                                                              width: 0.7,
-                                                              color: Color
-                                                                  .fromARGB(
-                                                                      255,
-                                                                      230,
-                                                                      164,
-                                                                      164)))),
-                                                  child: ListTile(
-                                                    title: Text(
-                                                      fileProvider
-                                                          .file_names[index]!,
-                                                      style: TextStyle(
-                                                          color: Colors.black),
-                                                    ),
-                                                    trailing: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      children: [
-                                                        ElevatedButton(
-                                                            onPressed:
-                                                                () async {
-                                                              try {
-                                                                final file = File(
-                                                                    fileProvider
-                                                                        .files[
-                                                                            index]
-                                                                        .path);
-                                                                await storageRef
-                                                                    .child(fileProvider
-                                                                            .file_names[
-                                                                        index]!)
-                                                                    .putFile(
-                                                                        file);
-                                                                print(
-                                                                    '-----------------------------------Success Fully Uploaded file---------------------------');
-                                                              } on Exception catch (e) {
-                                                                print(e);
-                                                              }
-                                                            },
-                                                            child: const Text(
-                                                                'Upload')),
-                                                        ElevatedButton.icon(
-                                                            onPressed:
-                                                                () async {
-                                                              await Share
-                                                                  .shareXFiles([
-                                                                XFile(fileProvider
-                                                                    .files[
-                                                                        index]
-                                                                    .path)
-                                                              ], text: 'Great Document');
-                                                            },
-                                                            label: Icon(Icons
-                                                                .share_outlined)),
-                                                        ElevatedButton.icon(
-                                                            onPressed: () {
-                                                              fileProvider.files
-                                                                  .removeAt(
-                                                                      index);
-                                                              fileProvider
-                                                                  .file_names
-                                                                  .removeAt(
-                                                                      index);
-                                                              setState(() {});
-                                                            },
-                                                            label: Icon(
-                                                                Icons.remove)),
-                                                      ],
-                                                    ),
+        : Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Card(
+                  child: Column(
+                children: [
+                  gradientCardSample(Email!, formattedDate, fileProvider.files),
+                ],
+              )),
+              const SizedBox(
+                height: 10,
+              ),
+              Expanded(
+                child: fileProvider.files.isNotEmpty
+                    ? Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        margin: EdgeInsets.all(35),
+                        color: Color.fromARGB(255, 211, 205, 187),
+                        shadowColor: Colors.blueAccent,
+                        child: fileProvider.files.isNotEmpty
+                            ? ListView.builder(
+                                itemCount: fileProvider.files.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return GestureDetector(
+                                      onTap: () => OpenFile.open(
+                                          fileProvider.files[index].path),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            25),
+                                                    border: Border(
+                                                        top: BorderSide(
+                                                            width: 0.7,
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    255,
+                                                                    255,
+                                                                    255)),
+                                                        bottom: BorderSide(
+                                                            width: 0.7,
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    255,
+                                                                    255,
+                                                                    255)))),
+                                                child: ListTile(
+                                                  title: Text(
+                                                    fileProvider
+                                                        .file_names[index]!,
+                                                    style: TextStyle(
+                                                        color: Colors.black),
+                                                  ),
+                                                  trailing: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      ElevatedButton(
+                                                          onPressed: () async {
+                                                            try {
+                                                              final file = File(
+                                                                  fileProvider
+                                                                      .files[
+                                                                          index]
+                                                                      .path);
+                                                              await storageRef
+                                                                  .child(fileProvider
+                                                                          .file_names[
+                                                                      index]!)
+                                                                  .putFile(
+                                                                      file);
+                                                              print(
+                                                                  '-----------------------------------Success Fully Uploaded file---------------------------');
+                                                            } on Exception catch (e) {
+                                                              print(e);
+                                                            }
+                                                          },
+                                                          child: const Text(
+                                                              'Upload')),
+                                                      ElevatedButton.icon(
+                                                          onPressed: () async {
+                                                            await Share
+                                                                .shareXFiles([
+                                                              XFile(fileProvider
+                                                                  .files[index]
+                                                                  .path)
+                                                            ], text: 'Document');
+                                                          },
+                                                          label: Icon(Icons
+                                                              .share_outlined)),
+                                                      ElevatedButton.icon(
+                                                          onPressed: () {
+                                                            fileProvider.files
+                                                                .removeAt(
+                                                                    index);
+                                                            fileProvider
+                                                                .file_names
+                                                                .removeAt(
+                                                                    index);
+                                                            setState(() {});
+                                                          },
+                                                          label: Icon(
+                                                              Icons.remove)),
+                                                    ],
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                          ],
-                                        ));
-                                  },
-                                )
-                              : Container())
-                      : Center(
-                          child: Text(
-                          "Upload files using the + icon ",
-                          style: TextStyle(fontSize: 15),
-                        )),
-                ),
-              ],
-            );
+                                          ),
+                                        ],
+                                      ));
+                                },
+                              )
+                            : Container())
+                    : Center(
+                        child: Text(
+                        "Upload files using the + icon ",
+                        style: TextStyle(fontSize: 15),
+                      )),
+              ),
+            ],
+          );
   }
 }

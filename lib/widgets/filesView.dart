@@ -1,9 +1,11 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_file_downloader/flutter_file_downloader.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 final filesRef = FirebaseStorage.instance.ref();
@@ -79,7 +81,7 @@ class _filesViewState extends State<filesView> {
     }
   }
 
-  deleteData(String fileName) async {
+  deleteData(String fileName, int index) async {
     final deleteRef = filesRef.child(fileName);
 
     final result = await showDialog(
@@ -104,10 +106,10 @@ class _filesViewState extends State<filesView> {
     if (result == true) {
       await deleteRef.delete();
       setState(() {
-        fileItems.clear();
+        fileItems.removeAt(index);
       });
-      await loadData();
-      await getTotalSize();
+      // await loadData();
+      // await getTotalSize();
     }
   }
 
@@ -128,7 +130,7 @@ class _filesViewState extends State<filesView> {
                         child: Text('Close')),
                     TextButton(
                         onPressed: () async {
-                          final result = await OpenFile.open(uri);
+                          await OpenFile.open(uri);
                         },
                         child: Text('Open')),
                   ],
@@ -139,17 +141,16 @@ class _filesViewState extends State<filesView> {
 
   @override
   Widget build(BuildContext context) {
-    print(
-        "------------------------------------------------------------${fileItems}");
     if (fileItems.isEmpty) {
       return Center(
-        child: CircularProgressIndicator(),
+        child: Lottie.asset('assets/animations/loading_animation.json',
+            width: 200, height: 200, fit: BoxFit.fill),
       );
     }
 
     return Column(children: [
       SizedBox(
-        height: 70,
+        height: 10,
       ),
       Padding(
         padding: const EdgeInsets.all(8.0),
@@ -160,7 +161,7 @@ class _filesViewState extends State<filesView> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50)),
               margin: EdgeInsets.all(10),
-              color: Color.fromARGB(106, 199, 195, 186),
+              color: Color.fromARGB(106, 158, 147, 172),
               child: Row(
                 children: [
                   SfRadialGauge(
@@ -248,19 +249,52 @@ class _filesViewState extends State<filesView> {
                       fileItems[index][0],
                       style: TextStyle(color: Colors.white),
                     ),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ElevatedButton.icon(
-                            onPressed: () {}, label: Icon(Icons.share)),
-                        ElevatedButton.icon(
-                            onPressed: () =>
-                                downloadFromUrl(fileItems[index][1]),
-                            label: Icon(Icons.download)),
-                        ElevatedButton.icon(
-                            onPressed: () => deleteData(fileItems[index][0]),
-                            label: Icon(Icons.delete)),
+                    trailing: PopupMenuButton(
+                      icon: Icon(Icons.more_horiz),
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          child: Text(
+                            "Share",
+                            style: GoogleFonts.archivo(
+                                fontSize: 18, fontWeight: FontWeight.w500),
+                          ),
+                          value: 0,
+                        ),
+                        PopupMenuItem(
+                          child: Text(
+                            "Download",
+                            style: GoogleFonts.archivo(
+                                fontSize: 18, fontWeight: FontWeight.w500),
+                          ),
+                          value: 1,
+                        ),
+                        PopupMenuItem(
+                          child: Text(
+                            "Delete",
+                            style: GoogleFonts.archivo(
+                                fontSize: 18, fontWeight: FontWeight.w500),
+                          ),
+                          value: 2,
+                        ),
                       ],
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      elevation: 5,
+                      offset: Offset(0, 50),
+                      onSelected: (value) async {
+                        switch (value) {
+                          case 0:
+                            await Share.share(
+                                'Check out this file: ${fileItems[index][1]}');
+                            break;
+                          case 1:
+                            await downloadFromUrl(fileItems[index][1]);
+                            break;
+                          case 2:
+                            await deleteData(fileItems[index][0], index);
+                            break;
+                        }
+                      },
                     ));
               }),
         ),
