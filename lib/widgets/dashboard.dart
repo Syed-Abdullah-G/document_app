@@ -72,7 +72,7 @@ class dashboardViewState extends ConsumerState<dashboardView> {
 
   Widget gradientCardSample(String email, String date, List<File> files) {
     return Container(
-      height: 200,
+      height: MediaQuery.of(context).size.height * 0.2,
       width: double.infinity,
       padding: const EdgeInsets.all(32),
       decoration: BoxDecoration(

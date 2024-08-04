@@ -55,6 +55,8 @@ dependencies:
   cunning_document_scanner: ^1.2.3
   hawk_fab_menu: ^1.2.0
   lottie: ^3.1.2
+  custom_button_builder: ^0.0.1
+
 
 dev_dependencies:
   flutter_test:

@@ -54,6 +54,9 @@ class _uploadedPageState extends State<uploadedPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
         body: widget.imagesPath!.isNotEmpty
             ? Column(
@@ -61,10 +64,10 @@ class _uploadedPageState extends State<uploadedPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Card(
-                    child: Image.file(File(widget.imagesPath![0])),
+                    child: Image.file(File(widget.imagesPath![0]),fit: BoxFit.cover,width: screenWidth * 0.8, height: screenHeight *0.4,),
                   ),
                   SizedBox(
-                    height: 60,
+                    height: screenHeight *0.05,
                   ),
                   TextField(
                     controller: _controller,
@@ -73,7 +76,7 @@ class _uploadedPageState extends State<uploadedPage> {
                         labelText: "Enter Filename"),
                   ),
                   SizedBox(
-                    height: 30,
+                    height: screenHeight * 0.05,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -84,12 +87,21 @@ class _uploadedPageState extends State<uploadedPage> {
                           },
                           child: Text('Cancel')),
                       SizedBox(
-                        width: 30,
+                        width: screenWidth * 0.05,
                       ),
                       ElevatedButton(
                           onPressed: () async {
                             final filename = _controller.text;
+                            if (filename.isNotEmpty) {
                             await uploadFile(filename);
+
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Please enter a filename'),
+                              ),
+                            );
+                            }
                           },
                           child: isUploading
                               ? CircularProgressIndicator()
