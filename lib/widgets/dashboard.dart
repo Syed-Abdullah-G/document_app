@@ -25,6 +25,7 @@ class dashboardView extends ConsumerStatefulWidget {
 class dashboardViewState extends ConsumerState<dashboardView> {
   DateTime now = DateTime.now();
   String? Email;
+  bool _uploading = false;
 
   //storage operations
 
@@ -192,6 +193,9 @@ class dashboardViewState extends ConsumerState<dashboardView> {
                                                     children: [
                                                       ElevatedButton(
                                                           onPressed: () async {
+                                                            setState(() {
+                                                              _uploading = true;
+                                                            });
                                                             try {
                                                               final file = File(
                                                                   fileProvider
@@ -208,10 +212,16 @@ class dashboardViewState extends ConsumerState<dashboardView> {
                                                                   '-----------------------------------Success Fully Uploaded file---------------------------');
                                                             } on Exception catch (e) {
                                                               print(e);
+                                                            } finally {
+                                                              setState(() {
+                                                                _uploading =
+                                                                    false;
+                                                              });
                                                             }
                                                           },
-                                                          child: const Text(
-                                                              'Upload')),
+                                                          child: _uploading
+                                                              ? CircularProgressIndicator()
+                                                              : Text('Upload')),
                                                       ElevatedButton.icon(
                                                           onPressed: () async {
                                                             await Share

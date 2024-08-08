@@ -87,64 +87,68 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       Text(
                         'Login',
                         style: GoogleFonts.archivo(
-                            fontSize: 80, fontWeight: FontWeight.bold),
+                            fontSize: 70, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
                         height: screenHeight * 0.05,
-                      ),
-                      Container(
-                          decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 197, 174, 216),
-                              borderRadius: BorderRadius.circular(30)),
-                          height: screenHeight * 0.3,
-                          width: screenWidth * 0.8,
-                          child: Card(
-                            color: Colors.transparent,
-                            margin: EdgeInsets.all(50),
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: TextFormField(
-                                    decoration: const InputDecoration(
-                                        labelText: 'Email'),
-                                    onSaved: (String? value) {
-                                      setState(() {
-                                        _enteredEmail = value!;
-                                      });
-                                    },
-                                    validator: (String? value) {
-                                      return (value == null ||
-                                              !value.contains('@'))
-                                          ? 'Please enter a proper Email address'
-                                          : null;
-                                    },
+                      ),SizedBox(height: 300,width: 600,
+                        child: Card(shape: 
+                        RoundedRectangleBorder(
+                          side: BorderSide(color: Color(0xff706AFD)),
+                          borderRadius: BorderRadius.circular(10)
+                        ),
+                            color: Color.fromARGB(115, 138, 136, 136),
+                              margin: EdgeInsets.all(50),
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: TextFormField(
+                                      decoration:  InputDecoration(border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),borderSide: BorderSide.none 
+                                      ),
+                                        filled: true,fillColor: Colors.grey,labelStyle: TextStyle(color: Colors.black.withOpacity(0.6)),
+                                          labelText: 'Email'),
+                                      onSaved: (String? value) {
+                                        setState(() {
+                                          _enteredEmail = value!;
+                                        });
+                                      },
+                                      validator: (String? value) {
+                                        return (value == null ||
+                                                !value.contains('@'))
+                                            ? 'Please enter a proper Email address'
+                                            : null;
+                                      },
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: screenHeight * 0.02,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: TextFormField(
-                                    decoration: const InputDecoration(
-                                        labelText: 'Password'),
-                                    onSaved: (String? value) {
-                                      setState(() {
-                                        _enteredPassword = value!;
-                                      });
-                                    },
-                                    validator: (String? value) {
-                                      return (value == null || value.length < 4)
-                                          ? 'Please choose a proper password'
-                                          : null;
-                                    },
+                                  SizedBox(
+                                    height: screenHeight * 0.01,
                                   ),
-                                ),
-                              ],
+                                  Padding(
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: TextFormField(
+                                      decoration:  InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none
+                                        ),filled: true,fillColor: Colors.grey,labelStyle: TextStyle(color: Colors.black.withOpacity(0.6)),
+                                          labelText: 'Password'),
+                                      onSaved: (String? value) {
+                                        setState(() {
+                                          _enteredPassword = value!;
+                                        });
+                                      },
+                                      validator: (String? value) {
+                                        return (value == null || value.length < 4)
+                                            ? 'Please choose a proper password'
+                                            : null;
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          )),
-                          SizedBox(height: 10,),
+                      ),
                       CustomButton(
                         width: 200,
                         backgroundColor: Colors.white,
@@ -153,7 +157,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         borderRadius: 25,
                         animate: true,
                         margin: const EdgeInsets.all(10),
-                        onPressed: () {},
+                        onPressed: _submit,
                         child: Text(
                           "Login",style: TextStyle(color: Colors.black),
                         ),
@@ -164,70 +168,116 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       Row(mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text("Don't have an account ? Create one",style: GoogleFonts.dmSans(),),
-                          ElevatedButton(
+                          TextButton(
                               onPressed: () {
                                 setState(() {
                                   _isLogin = false;
                                 });
                               },
-                              child: const Text('Create an account')),
+                              child: const Text('Create an account',style: TextStyle(color: Color.fromARGB(255, 51, 103, 194)),)),
                         ],
                       )
                     ],
                   )
-                : Column(
+                :                        Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Container(
+                      SizedBox(
+                        height: screenHeight * 0.1,
+                      ),
+                      Text(
+                        'Create Account',
+                        style: GoogleFonts.archivo(
+                            fontSize: 60, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: screenHeight * 0.05,
+                      ),SizedBox(height: 300,width: 600,
+                        child: Card(shape: 
+                        RoundedRectangleBorder(
+                          side: BorderSide(color: Color(0xff706AFD)),
+                          borderRadius: BorderRadius.circular(10)
+                        ),
+                            color: Color.fromARGB(115, 138, 136, 136),
+                              margin: EdgeInsets.all(50),
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: TextFormField(
+                                      decoration:  InputDecoration(border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),borderSide: BorderSide.none 
+                                      ),
+                                        filled: true,fillColor: Colors.grey,labelStyle: TextStyle(color: Colors.black.withOpacity(0.6)),
+                                          labelText: 'Email'),
+                                      onSaved: (String? value) {
+                                        setState(() {
+                                          _enteredEmail = value!;
+                                        });
+                                      },
+                                      validator: (String? value) {
+                                        return (value == null ||
+                                                !value.contains('@'))
+                                            ? 'Please enter a proper Email address'
+                                            : null;
+                                      },
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: screenHeight * 0.01,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: TextFormField(
+                                      decoration:  InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none
+                                        ),filled: true,fillColor: Colors.grey,labelStyle: TextStyle(color: Colors.black.withOpacity(0.6)),
+                                          labelText: 'Password'),
+                                      onSaved: (String? value) {
+                                        setState(() {
+                                          _enteredPassword = value!;
+                                        });
+                                      },
+                                      validator: (String? value) {
+                                        return (value == null || value.length < 4)
+                                            ? 'Please choose a proper password'
+                                            : null;
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                      ),
+                      CustomButton(
+                        width: 200,
+                        backgroundColor: Colors.white,
+                        isThreeD: true,
+                        height: 50,
+                        borderRadius: 25,
+                        animate: true,
+                        margin: const EdgeInsets.all(10),
+                        onPressed: _submit,
                         child: Text(
-                          'Create an account',
-                          style: Theme.of(context).textTheme.displaySmall,
+                          "Create",style: TextStyle(color: Colors.black),
                         ),
                       ),
-                      TextFormField(
-                        decoration: const InputDecoration(labelText: 'Email'),
-                        onSaved: (String? value) {
-                          setState(() {
-                            _enteredEmail = value!;
-                          });
-                        },
-                        validator: (String? value) {
-                          return (value == null || !value.contains('@'))
-                              ? 'Please enter a proper Email address'
-                              : null;
-                        },
-                      ),
                       SizedBox(
-                        height: screenHeight * 0.05,
+                        height:10,
                       ),
-                      TextFormField(
-                        decoration:
-                            const InputDecoration(labelText: 'Password'),
-                        onSaved: (String? value) {
-                          setState(() {
-                            _enteredPassword = value!;
-                          });
-                        },
-                        validator: (String? value) {
-                          return (value == null || value.length < 4)
-                              ? 'Please choose a proper password'
-                              : null;
-                        },
-                      ),
-                      SizedBox(
-                        height: screenHeight * 0.05,
-                      ),
-                      ElevatedButton(
-                          onPressed: _submit, child: const Text('Create')),
-                      SizedBox(
-                        height: screenHeight * 0.05,
-                      ),
-                      ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              _isLogin = true;
-                            });
-                          },
-                          child: const Text('Login'))
+                      Row(mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Already have an account ?",style: GoogleFonts.dmSans(),),
+                          TextButton(
+                              onPressed: () {
+                                setState(() {
+                                  _isLogin = true;
+                                });
+                              },
+                              child: const Text('Login',style: TextStyle(color: Color.fromARGB(255, 51, 103, 194)),)),
+                        ],
+                      )
                     ],
                   )));
   }
