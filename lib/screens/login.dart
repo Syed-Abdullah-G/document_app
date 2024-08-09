@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:custom_button_builder/custom_button_builder.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -94,11 +93,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       ),SizedBox(height: 300,width: 600,
                         child: Card(shape: 
                         RoundedRectangleBorder(
-                          side: BorderSide(color: Color(0xff706AFD)),
+                          side: const BorderSide(color: Color(0xff706AFD)),
                           borderRadius: BorderRadius.circular(10)
                         ),
-                            color: Color.fromARGB(115, 138, 136, 136),
-                              margin: EdgeInsets.all(50),
+                            color: const Color.fromARGB(115, 138, 136, 136),
+                              margin: const EdgeInsets.all(50),
                               child: Column(
                                 children: [
                                   Padding(
@@ -158,16 +157,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         animate: true,
                         margin: const EdgeInsets.all(10),
                         onPressed: _submit,
-                        child: Text(
+                        child: const Text(
                           "Login",style: TextStyle(color: Colors.black),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height:10,
                       ),
                       Row(mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Don't have an account ? Create one",style: GoogleFonts.dmSans(),),
+                          Text("Don't have an account ?",style: GoogleFonts.dmSans(),),
                           TextButton(
                               onPressed: () {
                                 setState(() {
@@ -188,18 +187,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       Text(
                         'Create Account',
                         style: GoogleFonts.archivo(
-                            fontSize: 60, fontWeight: FontWeight.bold),
+                            fontSize: 40, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
                         height: screenHeight * 0.05,
                       ),SizedBox(height: 300,width: 600,
                         child: Card(shape: 
                         RoundedRectangleBorder(
-                          side: BorderSide(color: Color(0xff706AFD)),
+                          side: const BorderSide(color: Color(0xff706AFD)),
                           borderRadius: BorderRadius.circular(10)
                         ),
-                            color: Color.fromARGB(115, 138, 136, 136),
-                              margin: EdgeInsets.all(50),
+                            color: const Color.fromARGB(115, 138, 136, 136),
+                              margin: const EdgeInsets.all(50),
                               child: Column(
                                 children: [
                                   Padding(
@@ -259,11 +258,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         animate: true,
                         margin: const EdgeInsets.all(10),
                         onPressed: _submit,
-                        child: Text(
+                        child: const Text(
                           "Create",style: TextStyle(color: Colors.black),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height:10,
                       ),
                       Row(mainAxisAlignment: MainAxisAlignment.center,

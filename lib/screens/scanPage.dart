@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:todo/widgets/dashboard.dart';
 
 final storageRef = FirebaseStorage.instance.ref();
 
@@ -71,7 +70,7 @@ class _uploadedPageState extends State<uploadedPage> {
                   ),
                   TextField(
                     controller: _controller,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: "Enter Filename"),
                   ),
@@ -85,7 +84,7 @@ class _uploadedPageState extends State<uploadedPage> {
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          child: Text('Cancel')),
+                          child: const Text('Cancel')),
                       SizedBox(
                         width: screenWidth * 0.05,
                       ),
@@ -97,15 +96,15 @@ class _uploadedPageState extends State<uploadedPage> {
 
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
+                              const SnackBar(
                                 content: Text('Please enter a filename'),
                               ),
                             );
                             }
                           },
                           child: isUploading
-                              ? CircularProgressIndicator()
-                              : Text('Upload'))
+                              ? const CircularProgressIndicator()
+                              : const Text('Upload'))
                     ],
                   ),
                 ],

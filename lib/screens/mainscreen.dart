@@ -51,7 +51,12 @@ class _MainscreenState extends ConsumerState<Mainscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('CloudDox'),
+        title: RichText(text: const TextSpan(
+        children: [
+          TextSpan(text: "Clou",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30)),
+          TextSpan(text: "Dox", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Color(0xFF706AFD)))
+        ]
+      )),
       ),
       backgroundColor: const Color.fromARGB(255, 25, 26, 31),
       bottomNavigationBar: NavigationBar(
@@ -60,7 +65,7 @@ class _MainscreenState extends ConsumerState<Mainscreen> {
             currentPageIndex = index;
           });
         },
-        indicatorColor: Color.fromARGB(255, 201, 99, 133),
+        indicatorColor: const Color.fromARGB(255, 201, 99, 133),
         selectedIndex: currentPageIndex,
         destinations: const [
           NavigationDestination(
@@ -75,9 +80,9 @@ class _MainscreenState extends ConsumerState<Mainscreen> {
         ],
       ),
       body: HawkFabMenu(
-        body: [dashboardView(), myFile()][currentPageIndex],
+        body: [const dashboardView(), const myFile()][currentPageIndex],
         icon: AnimatedIcons.menu_arrow,
-        fabColor: Color(0xFF755EE8),
+        fabColor: const Color(0xFF755EE8),
         iconColor: Colors.white,
         hawkFabMenuController: hawkFabMenuController,
         items: [
@@ -88,8 +93,8 @@ class _MainscreenState extends ConsumerState<Mainscreen> {
                 ScaffoldMessenger.of(context).hideCurrentSnackBar();
                 pickFiles();
               },
-              icon: Icon(Icons.upload_file_outlined),
-              color: Color.fromARGB(255, 201, 99, 133),
+              icon: const Icon(Icons.upload_file_outlined),
+              color: const Color.fromARGB(255, 201, 99, 133),
               labelColor: Colors.white),
           HawkFabMenuItem(
               labelBackgroundColor: Colors.transparent,
@@ -116,8 +121,8 @@ class _MainscreenState extends ConsumerState<Mainscreen> {
                   print(e);
                 }
               },
-              icon: Icon(Icons.document_scanner_outlined),
-              color: Color.fromARGB(255, 201, 99, 133),
+              icon: const Icon(Icons.document_scanner_outlined),
+              color: const Color.fromARGB(255, 201, 99, 133),
               labelColor: Colors.white),
           HawkFabMenuItem(
               labelBackgroundColor: Colors.transparent,
@@ -125,8 +130,8 @@ class _MainscreenState extends ConsumerState<Mainscreen> {
               ontap: () async {
                 FirebaseAuth.instance.signOut();
               },
-              icon: Icon(Icons.home),
-              color: Color.fromARGB(255, 201, 99, 133),
+              icon: const Icon(Icons.home),
+              color: const Color.fromARGB(255, 201, 99, 133),
               labelColor: Colors.white)
         ],
       ),

@@ -56,6 +56,8 @@ dependencies:
   hawk_fab_menu: ^1.2.0
   lottie: ^3.1.2
   custom_button_builder: ^0.0.1
+  flame_splash_screen: ^0.3.0
+  flutter_launcher_icons: ^0.13.1
 
 
 dev_dependencies:
@@ -72,6 +74,9 @@ dev_dependencies:
   build_runner: ^2.4.11
   custom_lint: ^0.6.4
   riverpod_lint: ^2.3.10 
+flutter_launcher_icons:
+    android: "ClouDox"
+    image_path: "assets/logo/logo.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -115,3 +120,4 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  

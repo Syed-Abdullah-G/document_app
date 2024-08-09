@@ -1,17 +1,9 @@
-import 'dart:io';
-import 'package:cunning_document_scanner/cunning_document_scanner.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hawk_fab_menu/hawk_fab_menu.dart';
-import 'package:todo/provider/file_details_provider.dart';
-import 'package:todo/provider/imageUpload.dart';
-import 'package:todo/screens/home.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:todo/screens/scanPage.dart';
+import 'package:todo/screens/initial_splash.dart';
 import 'firebase_options.dart';
-import 'package:animated_stack/animated_stack.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async {
@@ -20,12 +12,12 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
-    ProviderScope(child: MyApp()),
+    const ProviderScope(child: MyApp()),
   );
 }
 
 class MyApp extends ConsumerStatefulWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   ConsumerState<MyApp> createState() => _MyAppState();
@@ -38,7 +30,7 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(),
+      home: const InitialSplash(),
       theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(
