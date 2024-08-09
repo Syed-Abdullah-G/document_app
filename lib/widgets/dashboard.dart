@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:open_file_plus/open_file_plus.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,7 +10,6 @@ import 'dart:core';
 import 'package:intl/intl.dart';
 import 'package:todo/provider/file_details_provider.dart';
 import 'package:todo/styles/styles.dart';
-import 'package:todo/widgets/filesView.dart';
 
 final storageRef = FirebaseStorage.instance.ref();
 
@@ -204,7 +202,7 @@ class dashboardViewState extends ConsumerState<dashboardView> {
                                                           ),
                                                           trailing:
                                                               PopupMenuButton(
-                                                            icon: Icon(
+                                                            icon: const Icon(
                                                                 color: Colors
                                                                     .black,
                                                                 Icons
@@ -214,7 +212,7 @@ class dashboardViewState extends ConsumerState<dashboardView> {
                                                               PopupMenuItem(
                                                                 value: 0,
                                                                 child: _uploading
-                                                                    ? CircularProgressIndicator()
+                                                                    ? const CircularProgressIndicator()
                                                                     : Text(
                                                                         "Upload",
                                                                         style: GoogleFonts.archivo(
@@ -302,7 +300,7 @@ class dashboardViewState extends ConsumerState<dashboardView> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.all(16),
+                                    padding: const EdgeInsets.all(16),
                                     child: ElevatedButton(
                                         onPressed: () async {
                                           setState(() {
@@ -329,10 +327,10 @@ class dashboardViewState extends ConsumerState<dashboardView> {
                                           }
                                         },
                                         child: _uploading
-                                            ? CircularProgressIndicator(
+                                            ? const CircularProgressIndicator(
                                                 color: Colors.white,
                                               )
-                                            : Text("Upload All")),
+                                            : const Text("Upload All")),
                                   ),
                                 ],
                               )

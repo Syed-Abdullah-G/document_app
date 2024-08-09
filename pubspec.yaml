@@ -75,7 +75,7 @@ dev_dependencies:
   custom_lint: ^0.6.4
   riverpod_lint: ^2.3.10 
 flutter_launcher_icons:
-    android: "ClouDox"
+    android: true
     image_path: "assets/logo/logo.png"
 
 # For information on the generic Dart part of this file, see the
